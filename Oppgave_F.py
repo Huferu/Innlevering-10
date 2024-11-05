@@ -5,27 +5,48 @@ from Oppgave_e import convert_to_datetime as Konverter_til_datatid
 
 #Øving 6 
 
-def gjennomsnitt(n:int, y:list):
-    _y = 0
-    for i in range (1,n):
-        _y += y[i]
-    _y /= n
-    return _y
+def gjennomsnitt(liste):
+    summer = 0
+    for i in liste:
+        summer += i
+    summer /= len(liste)
+    return summer
 
-def standardavvik(n:int, y:list, _y:float):
-    sum = 0
-    for i in range (n):
-        sum += (y[i] - _y) ** 2
-    sum = math.sqrt(sum/(n-1))
-    return sum
+def standardavvik(liste):
+    n = len(liste)
+    if n < 2:
+         return 0
+    summer = 0
+    for i in liste:
+        summer += (i - gjennomsnitt(liste)) ** 2
+    avvik = math.sqrt(summer/(n-1))
+    return avvik
+
+def glidende_statestikk(data, vindusstorrelse):
+    gjennomsnitt_liste = []
+    standardavvik_liste = []
+
+    for i in range(len(data) - vindusstorrelse + 1):
+            vindu = data[i:i + vindusstorrelse]
+            
+            # Beregn gjennomsnitt og standardavvik for vinduet
+            gj_snitt = gjennomsnitt(vindu)
+            std_avvik = standardavvik(vindu)
+            
+            # Legg til resultatene i listene
+            gjennomsnitt_liste.append(gj_snitt)
+            standardavvik_liste.append(std_avvik)
+            
+    return gjennomsnitt_liste, standardavvik_liste
 
 liste = LagListe('trykk_og_temperaturlogg_rune_time.csv.txt',5)
 tid = [int(tid) for tid in liste[1]]
 temperaturer = [float(temp.replace(',','.')) for temp in liste[4]]
 
-standardavvik_liste = standardavvik(len(temperaturer),temperaturer,gjennomsnitt(len(temperaturer), temperaturer))
-avstand = 100
+vindustorrelse = 3
+gjennomsnitt_liste, standardavvik_liste = glidende_statestikk(temperaturer, vindustorrelse)
+avstand = 30
 hvor_lang = 2 #en viss avstand idk
 
-plt.errorbar(y=temperaturer,x=tid,yerr=standardavvik_liste, errorevery=avstand, capsize=hvor_lang)
+plt.errorbar(x=tid[2:],y=gjennomsnitt_liste,yerr=standardavvik_liste, errorevery=avstand, capsize=hvor_lang)
 plt.show()
