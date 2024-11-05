@@ -43,10 +43,12 @@ liste = LagListe('trykk_og_temperaturlogg_rune_time.csv.txt',5)
 tid = [int(tid) for tid in liste[1]]
 temperaturer = [float(temp.replace(',','.')) for temp in liste[4]]
 
-vindustorrelse = 3
+vindustorrelse = 30
 gjennomsnitt_liste, standardavvik_liste = glidende_statestikk(temperaturer, vindustorrelse)
 avstand = 30
 hvor_lang = 2 #en viss avstand idk
 
-plt.errorbar(x=tid[2:],y=gjennomsnitt_liste,yerr=standardavvik_liste, errorevery=avstand, capsize=hvor_lang)
+plt.errorbar(x=tid[vindustorrelse-1:],y=gjennomsnitt_liste,yerr=standardavvik_liste, errorevery=avstand, capsize=hvor_lang, label="Gjennomsnitt av temperatur")
+plt.title('Standaravvik på gjennomsnittligmåling av temperatur')
+plt.legend()
 plt.show()
