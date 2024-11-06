@@ -10,8 +10,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Les data fra de to filene med semikolon som separator
-data_file_1 = pd.read_csv('/Users/bruker/Desktop/PYTHON/fil1.csv.txt', sep=';')  # Erstatt med din første fil
-data_file_2 = pd.read_csv('/Users/bruker/Desktop/PYTHON/fil2.csv.txt', sep=';')  # Erstatt med din andre fil
+data_file_1 = pd.read_csv('temperatur_trykk_met_samme_rune_time_datasett.csv.txt', sep=';')  # Erstatt med din første fil
+data_file_2 = pd.read_csv('trykk_og_temperaturlogg_rune_time.csv.txt', sep=';')  # Erstatt med din andre fil
 
 # Rens opp i kolonnenavnene
 data_file_1.columns = data_file_1.columns.str.strip()

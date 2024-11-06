@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Les data fra filen med semikolon som separator
-data_file = pd.read_csv('/Users/bruker/Desktop/PYTHON/fil2.csv.txt', sep=';')
+data_file = pd.read_csv('trykk_og_temperaturlogg_rune_time.csv.txt', sep=';')
 
 # Rens opp i kolonnenavnene
 data_file.columns = data_file.columns.str.strip()
@@ -27,12 +27,12 @@ data_file['Glidende gjennomsnitt'] = data_file['Differanse'].rolling(window=21, 
 
 # Plot differansen og glidende gjennomsnitt
 plt.figure(figsize=(12, 6))
-plt.plot(data_file['Dato og tid'], data_file['Differanse'], label='Differanse mellom trykk', marker='o', linestyle='-', alpha=0.7)
-plt.plot(data_file['Dato og tid'], data_file['Glidende gjennomsnitt'], label='Glidende gjennomsnitt (21 punkter)', color='orange', linewidth=2)
+plt.plot(data_file['Tid siden start (sek)'], data_file['Differanse'], label='Differanse mellom trykk', marker='o', linestyle='-', alpha=0.7)
+plt.plot(data_file['Tid siden start (sek)'], data_file['Glidende gjennomsnitt'], label='Glidende gjennomsnitt (21 punkter)', color='orange', linewidth=2)
 
 # Legg til tittel og etiketter
 plt.title('Differanse mellom absolutt og barometrisk trykk')
-plt.xlabel('Tid')
+plt.xlabel('Tid med intervall på 10 sekund')
 plt.ylabel('Trykkdifferanse (bar)')
 plt.legend()
 plt.grid(True)
